@@ -1,0 +1,28 @@
+{
+  "name": "create-a-team",
+  "version": "1.0.0",
+  "description": "Create a team for work",
+  "main": "script.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmilner29/create-a-team.git"
+  },
+  "author": "Madi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmilner29/create-a-team/issues"
+  },
+  "homepage": "https://github.com/mmilner29/create-a-team#readme",
+  "dependencies": {
+    "inquirer": "^8.2.2"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
