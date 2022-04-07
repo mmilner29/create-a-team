@@ -1,5 +1,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
+const generatePage = require('./src/generateMarkdown');
 const file = './dist/index.html';
 
 const questions = [
@@ -141,7 +142,13 @@ function addManager() {
 
 
 // Function to create index.html file
-
+function writeToFile(fileName, data) {
+    const html = generatePage(data);
+    fs.writeFile(fileName, html, err => {
+        if (err) throw new Error(err);
+        console.log('Your team file has been created! Check out index.html in the dist directory to see it!');
+    });
+};
 
 // Function to initialize app
 function init() {
