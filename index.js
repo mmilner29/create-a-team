@@ -2,6 +2,9 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const generatePage = require('./src/generateMarkdown');
 const file = './dist/index.html';
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
 
 const questions = [
     {
@@ -12,7 +15,7 @@ const questions = [
     },
     {
         type: 'input',
-        name: 'employee-id',
+        name: 'employeeid',
         message: 'What is their employee ID?'
     },
     {
@@ -54,7 +57,7 @@ const engQuestion = [
     },
     {
         type: 'input',
-        name: 'employee-id',
+        name: 'employeeid',
         message: 'What is their employee ID?'
     },
     {
@@ -79,7 +82,7 @@ const intQuestion = [
     },
     {
         type: 'input',
-        name: 'employee-id',
+        name: 'employeeid',
         message: 'What is their employee ID?'
     },
     {
@@ -97,10 +100,13 @@ const intQuestion = [
 function addIntern() {
     inquirer.prompt(intQuestion)
     .then((intAnswers) => {
-        console.log(intAnswers);
+        const int = new Intern(intAnswers.name, intAnswers.employeeid, intAnswers.email, intAnswers.school);
+        console.log(int);
+        addCard(int);
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
+                finishMarkdown();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -112,10 +118,13 @@ function addIntern() {
 function addEngineer() {
     inquirer.prompt(engQuestion)
     .then((engAnswers) => {
+        const eng = new Engineer(engAnswers.name, engAnswers.employeeid, engAnswers.email, engAnswers.github);
         console.log(engAnswers);
+        addCard(eng);
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
+                finishMarkdown();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -128,10 +137,13 @@ function addEngineer() {
 function addManager() {
     inquirer.prompt(questions)
     .then((manAnswers) => {
+        const man = new Manager(manAnswers.name, manAnswers.employeeid, manAnswers.email, manAnswers.officeNumber);
+        addCard(man);
         console.log(manAnswers);
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
+                finishMarkdown();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -142,16 +154,32 @@ function addManager() {
 
 
 // Function to create index.html file
-function writeToFile(fileName, data) {
-    const html = generatePage(data);
+function writeToFile(fileName) {
+    const html = generatePage();
     fs.writeFile(fileName, html, err => {
         if (err) throw new Error(err);
-        console.log('Your team file has been created! Check out index.html in the dist directory to see it!');
+        // console.log('Your team file has been created! Check out index.html in the dist directory to see it after answering the prompts!');
     });
 };
 
+
+function finishMarkdown() {
+    const endhtml = `
+            </div>
+            </div>
+        </body>
+        </html>
+        `
+        fs.appendFile(file, endhtml, function (err) {
+            if (err) {
+                console.log(err);
+            };
+        });
+}
+
 // Function to initialize app
 function init() {
+    writeToFile(file);
     inquirer.prompt(memberType)
     .then(({member}) => {
         if (member === 'Engineer') {
@@ -169,4 +197,82 @@ function init() {
     })
 };
 
+function addCard(member) {
+    const name = member.getName();
+    const role = member.getRole();
+    const id = member.getId();
+    const email = member.getEmail();
+
+    let card = '';
+    if (role === 'Manager') {
+        const officeNum = member.getOfficeNumber();
+        card = `
+        <div class="col">
+            <div class="card text-dark bg-light m-3 border-info">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h2>${name}</h2>
+                        <h3>Manager</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: ${id}</li>
+                        <li class="list-group-item">Email: ${email}</li>
+                        <li class="list-group-item">Office Number: ${officeNum}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        `
+    } else if (role === 'Engineer') {
+        const gitHub = member.getGithub();
+        card = `
+        <div class="col">
+            <div class="card text-dark bg-light m-3 border-info">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h2>${name}</h2>
+                        <h3>Engineer</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: ${id}</li>
+                        <li class="list-group-item">Email: ${email}</li>
+                        <li class="list-group-item">Github: ${gitHub}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        `
+
+    } else if (role === 'Intern') {
+        const school = member.getSchool();
+        card = `
+        <div class="col">
+            <div class="card text-dark bg-light m-3 border-info">
+                <div class="card-body">
+                    <div class="card-header">
+                        <h2>${name}</h2>
+                        <h3>Intern</h3>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">ID: ${id}</li>
+                        <li class="list-group-item">Email: ${email}</li>
+                        <li class="list-group-item">School: ${school}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        `
+    }
+
+    
+    fs.appendFile(file, card, function (err) {
+        if (err) {
+            console.log(err);
+        };
+    });
+}
+
 init();
+
+
+ 
