@@ -7,13 +7,11 @@ A website designed for employers to create a team profile for their team members
 * Javascript
 * Node.js
 
-## Website
+## Preview & Demo
 
-https://mmilner29.github.io/create-a-team/
+![Website Preview](./assets/content/preview.png)  
 
-## Preview
-
-![Website Preview](/assets/images/preview.png)
+![Website Demo](https://youtu.be/muwUGxmmTn4)
 
 ## Contribution
 Made with ❤️ by Madi Milner
