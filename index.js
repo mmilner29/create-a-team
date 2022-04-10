@@ -1,3 +1,5 @@
+//Include dependencies
+
 const fs = require('fs');
 const inquirer = require('inquirer');
 const generatePage = require('./src/generateMarkdown');
@@ -8,6 +10,7 @@ const Manager = require('./lib/Manager');
 
 let cardsArray = []
 
+//Prompt question arrays
 const questions = [
     {
         type: 'input',
