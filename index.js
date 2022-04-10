@@ -6,7 +6,7 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
-const cardsArray = []
+let cardsArray = []
 
 const questions = [
     {
@@ -108,8 +108,7 @@ function addIntern() {
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
-                writeCards();
-                // finishMarkdown();
+                appendCards();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -127,8 +126,7 @@ function addEngineer() {
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
-                writeCards();
-                // finishMarkdown();
+                appendCards();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -147,8 +145,7 @@ function addManager() {
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
-                writeCards();
-                // finishMarkdown();
+                appendCards();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -203,13 +200,13 @@ function init() {
 };
 
 function addCard(member) {
-    const name = member.getName();
-    const role = member.getRole();
-    const id = member.getId();
-    const email = member.getEmail();
+    let name = member.getName();
+    let role = member.getRole();
+    let id = member.getId();
+    let email = member.getEmail();
 
     if (role === 'Manager') {
-        const officeNum = member.getOfficeNumber();
+        let officeNum = member.getOfficeNumber();
         card = `
         <div class="col">
             <div class="card text-dark bg-light m-3 border-info">
@@ -228,7 +225,7 @@ function addCard(member) {
         </div>
         `
     } else if (role === 'Engineer') {
-        const gitHub = member.getGithub();
+        let gitHub = member.getGithub();
         card = `
         <div class="col">
             <div class="card text-dark bg-light m-3 border-info">
@@ -248,7 +245,7 @@ function addCard(member) {
         `
 
     } else if (role === 'Intern') {
-        const school = member.getSchool();
+        let school = member.getSchool();
         card = `
         <div class="col">
             <div class="card text-dark bg-light m-3 border-info">
@@ -269,46 +266,39 @@ function addCard(member) {
     }
 
 cardsArray.push(card);
-}
-
-function writeCards() {
-        const length = cardsArray.length;
-
-            for (let i = 0; i < length - 1; i++) {
-            let newCard = cardsArray.slice([i])
-            console.log(newCard);
-            let cardString = newCard.toString([i]);
-            console.log(cardString);
-            appendCards(cardString);
-            }
-            
-        // } else {
-        //     let newCard = cardsArray
-        //     console.log(newCard);
-        //     let cardString = newCard.toString();
-        //     console.log(cardString);
-        //     appendCards(cardString);
-        // }
-
-    const endhtml = `
-    </div>
-    </div>
-</body>
-</html>
-`
-fs.appendFile(file, endhtml, function (err) {
-    if (err) {
-        console.log(err);
-    };
-});
 };
 
-function appendCards(data) {
-    fs.appendFile(file, data, function (err) {
+// function writeCards(cardData) {
+//         const length = cardsArray.length;
+
+//             // for (let i = 0; i < length - 1; i++) {
+//             let newCard = cardsArray.slice([length - 1])
+//             console.log(newCard);
+//             let cardString = newCard.toString();
+//             console.log(cardString);
+//             appendCards(cardString);
+//             // }
+            
+//         // } else {
+//         //     let newCard = cardsArray
+//         //     console.log(newCard);
+//         //     let cardString = newCard.toString();
+//         //     console.log(cardString);
+//         //     appendCards(cardString);
+//         // }
+
+// };
+
+function appendCards() {
+    const cardString = cardsArray.toString();
+
+    fs.appendFile(file, cardString, function (err) {
         if (err) {
             console.log(err);
         };
     });
+
+    finishMarkdown();
 }
 
 init();
