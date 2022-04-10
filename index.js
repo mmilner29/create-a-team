@@ -220,7 +220,7 @@ function addCard(member) {
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">Email: ${email}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
                         <li class="list-group-item">Office Number: ${officeNum}</li>
                     </ul>
                 </div>
@@ -239,8 +239,8 @@ function addCard(member) {
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">Email: ${email}</li>
-                        <li class="list-group-item">Github: ${gitHub}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
+                        <li class="list-group-item">Github: <a href="https://github.com/${gitHub}" target="_blank">${gitHub}</a></li>
                     </ul>
                 </div>
             </div>
@@ -259,7 +259,7 @@ function addCard(member) {
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">ID: ${id}</li>
-                        <li class="list-group-item">Email: ${email}</li>
+                        <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
                         <li class="list-group-item">School: ${school}</li>
                     </ul>
                 </div>
