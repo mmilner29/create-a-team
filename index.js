@@ -6,6 +6,8 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
+const cardsArray = []
+
 const questions = [
     {
         type: 'input',
@@ -106,7 +108,8 @@ function addIntern() {
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
-                finishMarkdown();
+                writeCards();
+                // finishMarkdown();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -124,7 +127,8 @@ function addEngineer() {
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
-                finishMarkdown();
+                writeCards();
+                // finishMarkdown();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -143,7 +147,8 @@ function addManager() {
         inquirer.prompt(addMembers)
         .then((response) => {
             if (!response.new) {
-                finishMarkdown();
+                writeCards();
+                // finishMarkdown();
                 console.log('Your team file has been created!');
             } else {
                 init();
@@ -203,7 +208,6 @@ function addCard(member) {
     const id = member.getId();
     const email = member.getEmail();
 
-    let card = '';
     if (role === 'Manager') {
         const officeNum = member.getOfficeNumber();
         card = `
@@ -264,8 +268,43 @@ function addCard(member) {
         `
     }
 
-    
-    fs.appendFile(file, card, function (err) {
+cardsArray.push(card);
+}
+
+function writeCards() {
+        const length = cardsArray.length;
+
+            for (let i = 0; i < length - 1; i++) {
+            let newCard = cardsArray.slice([i])
+            console.log(newCard);
+            let cardString = newCard.toString([i]);
+            console.log(cardString);
+            appendCards(cardString);
+            }
+            
+        // } else {
+        //     let newCard = cardsArray
+        //     console.log(newCard);
+        //     let cardString = newCard.toString();
+        //     console.log(cardString);
+        //     appendCards(cardString);
+        // }
+
+    const endhtml = `
+    </div>
+    </div>
+</body>
+</html>
+`
+fs.appendFile(file, endhtml, function (err) {
+    if (err) {
+        console.log(err);
+    };
+});
+};
+
+function appendCards(data) {
+    fs.appendFile(file, data, function (err) {
         if (err) {
             console.log(err);
         };
