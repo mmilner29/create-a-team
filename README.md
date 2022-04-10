@@ -7,9 +7,9 @@ A website designed for employers to create a team profile for their team members
 * Javascript
 * Node.js
 
-## Preview & Demo
+## Preview & Demo  
 
-[![Create-a-Team Demo](https://img.youtube.com/vi/muwUGxmmTn4)](https://www.youtube.com/watch?v=muwUGxmmTn4)  
+![Generated File Preview](./assets/content/preview.png)
 
 [Create A Team Demo](https://youtu.be/muwUGxmmTn4)  
 
